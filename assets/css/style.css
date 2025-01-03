@@ -1,0 +1,83 @@
+:root {
+    /* Remplacez ces couleurs par celles de votre logo */
+    --primary-color: #YOUR_PRIMARY_COLOR;
+    --secondary-color: #YOUR_SECONDARY_COLOR;
+    --accent-color: #YOUR_ACCENT_COLOR;
+    --text-light: #ffffff;
+    --text-dark: #333333;
+    --background-light: #f5f5f5;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #FAF5F5; /* Couleur de fond */
+}
+
+.header {
+    background: linear-gradient(135deg, #E8A87C, #B3E1E1); /* Couleurs du logo */
+    color: white;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.header .company-logo {
+    width: 150px;
+    margin-bottom: 20px;
+    border-radius: 50%; /* Bordure arrondie */
+    object-fit: cover; /* Ajuste l'image pour qu'elle remplisse le conteneur */
+}
+
+.mission-section {
+    background: #FAF5F5; /* Couleur de fond */
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.mission-section:hover {
+    transform: translateY(-5px);
+}
+
+.contact-section {
+    background: #8B5A54; /* Couleur du logo */
+    color: white;
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+    position: relative;
+}
+
+.social-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background: white;
+    color: #8B5A54; /* Couleur du logo */
+    text-decoration: none;
+    border-radius: 25px;
+    margin: 10px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Animation classes */
+.fade-in {
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
