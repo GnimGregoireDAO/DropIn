@@ -24,4 +24,4 @@ Notre Objectif
 
 Transformer le "Drop Out" en "Drop In" en créant une communauté solidaire où chaque étudiant peut trouver sa voie, développer son potentiel et se construire un avenir qui lui ressemble. Nous ne sommes pas là pour remplacer les structures existantes, mais pour les rendre plus accessibles et plus attractives pour la nouvelle génération.
 
-                          Ensemble, donnons un nouveau sens à l'expérience scolaire !
+                                  Ensemble, donnons un nouveau sens à l'expérience scolaire !
