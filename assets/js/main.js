@@ -1,45 +1,45 @@
-// Initialize AOS (Animate On Scroll)
+// Initialisation de AOS (Animate On Scroll) pour les animations au défilement
 AOS.init({
-    duration: 1000,
-    once: true
+    duration: 1000, // Durée des animations en millisecondes
+    once: true // Les animations ne se déclenchent qu'une seule fois
 });
 
 $(document).ready(function() {
-    // Smooth scroll for links
+    // Défilement fluide pour les liens
     $('a[href^="#"]').on('click', function(event) {
         event.preventDefault();
         $('html, body').animate({
             scrollTop: $($.attr(this, 'href')).offset().top
-        }, 800);
+        }, 800); // Durée du défilement en millisecondes
     });
 
-    // Add hover effect to mission sections
+    // Effet de survol pour les sections de mission
     $('.mission-section').hover(
         function() {
-            $(this).addClass('shadow-lg');
+            $(this).addClass('shadow-lg'); // Ajoute une ombre lors du survol
         },
         function() {
-            $(this).removeClass('shadow-lg');
+            $(this).removeClass('shadow-lg'); // Retire l'ombre lorsque le survol cesse
         }
     );
 
-    // Animate social links on hover
+    // Animation des liens sociaux au survol
     $('.social-link').hover(
         function() {
-            $(this).addClass('pulse');
+            $(this).addClass('pulse'); // Ajoute une animation de pulsation
         },
         function() {
-            $(this).removeClass('pulse');
+            $(this).removeClass('pulse'); // Retire l'animation de pulsation
         }
     );
 
-    // Add loading animation
+    // Animation de chargement
     $(window).on('load', function() {
-        $('.container').addClass('fade-in');
+        $('.container').addClass('fade-in'); // Ajoute une animation de fondu
     });
 });
 
-// Typing effect for header
+// Effet de saisie pour le texte de l'en-tête
 const texts = ['contre le décrochage scolaire', 'pour votre réussite', 'à vos côtés'];
 let count = 0;
 let index = 0;
@@ -53,12 +53,12 @@ let letter = '';
     currentText = texts[count];
     letter = currentText.slice(0, ++index);
     
-    $('.header p').text(letter);
+    $('.header p').text(letter); // Met à jour le texte de l'en-tête
     if (letter.length === currentText.length) {
         count++;
         index = 0;
-        setTimeout(type, 2000);
+        setTimeout(type, 2000); // Pause de 2 secondes avant de recommencer
     } else {
-        setTimeout(type, 100);
+        setTimeout(type, 100); // Intervalle de 100ms entre chaque lettre
     }
 }());
