@@ -14,6 +14,9 @@ body {
     margin: 0; /* Marge */
     padding: 0; /* Padding */
     background-color: #FAF5F5; /* Couleur de fond */
+    -webkit-font-smoothing: antialiased; /* Lissage des polices */
+    -moz-osx-font-smoothing: grayscale; /* Lissage des polices */
+    
 }
 
 .header {
@@ -80,4 +83,17 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; } /* Départ de l'animation */
     to { opacity: 1; } /* Fin de l'animation */
+}
+
+.funding-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: width 0.3s;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 30px;
+}
+.funding-button:hover {
+    width: 150px;
 }
