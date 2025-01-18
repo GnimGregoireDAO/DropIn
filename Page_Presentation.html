@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DropIn - Ensemble contre le décrochage scolaire</title>
     <!-- Bootstrap CSS pour le style responsive -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- AOS CSS pour les animations au défilement -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -12,6 +13,8 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- Favicon -->
     <link rel="icon" href="assets/images/GDG_PRODUCTIONS.png" type="image/png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
     <div class="header" style="position: relative;">
@@ -22,7 +25,9 @@
         <!-- Sous-titre -->
         <p class="lead" data-aos="fade-up">Ensemble, luttons contre le décrochage scolaire</p>
         <div class="funding-button">
-            <a href="https://www.paypal.me/DAOGnimGregoire" class="btn btn-primary">Faire un don</a>
+            <a href="https://www.paypal.me/DAOGnimGregoire" class="btn btn-primary">
+                <i class="fas fa-heart"></i> Soutenir DropIn
+            </a>
         </div>
     </div>
 
@@ -43,9 +48,11 @@
         <div class="contact-section" data-aos="zoom-in">
             <!-- Section de contact -->
             <h2>Parlons ensemble</h2>
-            <p>Tu rencontres des difficultés à l'école ? Tu as besoin d'en parler ?<br>
-            N'hésite pas à me contacter sur Instagram :</p>
-            <a href="https://www.instagram.com/gdg_productions_x_dg/" class="social-link">@DropIn_support</a>
+            <p>Tu rencontres des difficultés à l'école ? Tu as besoin d'en parler ?</p>
+            <div class="contact-options">
+                <a href="https://www.instagram.com/gdg_productions_x_dg/" class="social-link">@DropIn_support</a>
+                <a href="pages/discussion_privee.html" class="social-link">Discussion Privée Anonyme</a>
+            </div>
             <p>Je suis là pour t'écouter et t'accompagner dans ton parcours.</p>
         </div>
 
@@ -59,8 +66,8 @@
         <div class="presentation-section mission-section" data-aos="fade-up">
             <!-- Section de présentation -->
             <h2>À propos de moi</h2>
-            <img src="assets/images/perso.jpeg" alt="Votre photo" class="img-fluid rounded-circle mb-3" style="width: 150px;">
             <p>Bonjour, je suis DAO Gnim Gregoire, le créateur de DropIn. Passionné par l'éducation et le soutien aux élèves, j'ai décidé de lancer cette plateforme pour aider les jeunes à surmonter leurs difficultés scolaires et à réussir dans leur parcours éducatif.</p>
+            <a href="pages/about.html" class="social-link mt-3">En savoir plus</a>
         </div>
     </div>
 
@@ -72,5 +79,62 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- Fichier JavaScript personnalisé -->
     <script src="assets/js/main.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Sélectionner tous les éléments de texte
+        const textElements = gsap.utils.toArray(".container p, .container h2, .container li");
+        
+        // Créer une timeline pour chaque élément
+        textElements.forEach(element => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top center+=100",
+                    end: "bottom center-=100",
+                    scrub: 2, // Ralentir le scrub
+                    toggleActions: "restart pause reverse pause"
+                }
+            });
+
+            tl.fromTo(element, 
+                {
+                    scale: 1,
+                    backgroundImage: "linear-gradient(45deg, #B3E1E1, #E8A87C)", // Couleurs inversées ici
+                    backgroundSize: "200% 100%",
+                    backgroundPosition: "left",
+                    backgroundClip: "text",
+                    "-webkit-background-clip": "text",
+                    color: "rgba(0,0,0,0.2)"
+                },
+                {
+                    scale: 1.05,
+                    backgroundPosition: "right",
+                    color: "transparent",
+                    duration: 4, // Doubler la durée
+                    ease: "power1.inOut" // Easing plus doux
+                }
+            ).to(element, {
+                scale: 1,
+                duration: 2, // Doubler la durée
+                delay: 0.4 // Doubler le délai
+            });
+        });
+
+        // Animation globale de l'onde avec couleurs inversées
+        gsap.to(".container", {
+            backgroundImage: "linear-gradient(90deg, rgba(179,225,225,0.1), rgba(232,168,124,0.1))", // Couleurs inversées ici
+            backgroundSize: "200% 100%",
+            backgroundPosition: "right",
+            duration: 4, // Doubler la durée
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".container",
+                start: "top center",
+                end: "bottom center",
+                scrub: 2 // Ralentir le scrub
+            }
+        });
+    </script>
 </body>
 </html>
