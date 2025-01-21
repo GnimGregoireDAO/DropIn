@@ -1,0 +1,17 @@
+{
+  "name": "dropin",
+  "version": "1.0.0",
+  "description": "Bienvenue sur DropIn, une plateforme innovante dédiée à la prévention du décrochage scolaire et au soutien des élèves. Notre mission est de créer un espace sûr, bienveillant et moderne où chaque étudiant peut s'exprimer librement et trouver l'accompagnement dont il a besoin.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "uuid": "^11.0.5",
+    "ws": "^8.18.0"
+  }
+}
