@@ -72,8 +72,8 @@ wss.on('connection', (ws, req) => {
   });
 });
 
-// Automatically start the Node.js server
-exec('node server.js', (err, stdout, stderr) => {
+// Automatically start the Node.js server using PM2
+exec('pm2 start server.js', (err, stdout, stderr) => {
   if (err) {
     console.error(`Erreur lors du démarrage du serveur: ${err}`);
     return;
