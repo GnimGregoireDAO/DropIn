@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Vérification de la connexion admin
+    if (!localStorage.getItem('adminConnected') && !window.location.href.includes('login.html')) {
+        window.location.href = './login.html';
+        return;
+    }
+
     // Gestion du formulaire de connexion
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
@@ -10,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Vérification simple (à remplacer par une vraie authentification)
             if (username === "admin" && password === "dropin2024") {
                 localStorage.setItem('adminConnected', 'true');
-                window.location.href = 'admin.html';
+                window.location.href = window.location.href.replace('login.html', 'admin.html');
             } else {
                 alert('Identifiants incorrects');
             }
