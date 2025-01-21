@@ -1,11 +1,9 @@
-// Initialisation de AOS (Animate On Scroll) pour les animations au défilement
 AOS.init({
     duration: 1000, // Durée des animations en millisecondes
     once: true // Les animations ne se déclenchent qu'une seule fois
 });
 
 $(document).ready(function() {
-    // Défilement fluide pour les liens
     $('a[href^="#"]').on('click', function(event) {
         event.preventDefault();
         $('html, body').animate({
@@ -13,7 +11,6 @@ $(document).ready(function() {
         }, 800); // Durée du défilement en millisecondes
     });
 
-    // Effet de survol pour les sections de mission
     $('.mission-section').hover(
         function() {
             $(this).addClass('shadow-lg'); // Ajoute une ombre lors du survol
@@ -23,7 +20,6 @@ $(document).ready(function() {
         }
     );
 
-    // Animation des liens sociaux au survol
     $('.social-link').hover(
         function() {
             $(this).addClass('pulse'); // Ajoute une animation de pulsation
@@ -33,13 +29,11 @@ $(document).ready(function() {
         }
     );
 
-    // Animation de chargement
     $(window).on('load', function() {
         $('.container').addClass('fade-in'); // Ajoute une animation de fondu
     });
 });
 
-// Effet de saisie pour le texte de l'en-tête
 const texts = ['contre le décrochage scolaire', 'pour votre réussite', 'à vos côtés'];
 let count = 0;
 let index = 0;

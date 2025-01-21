@@ -9,7 +9,7 @@ const conversations = new Map();
 
 ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
-    
+
     if (data.type === 'newMessage') {
         // Ajouter à la conversation
         if (!conversations.has(data.clientId)) {
@@ -17,12 +17,12 @@ ws.onmessage = (event) => {
             addClientToList(data.clientId);
         }
         conversations.get(data.clientId).push(data);
-        
+
         // Si c'est le client actuel, afficher le message
         if (currentClient === data.clientId) {
             displayMessage(data);
         }
-        
+
         // Notification
         notifyNewMessage(data);
     }
@@ -56,19 +56,19 @@ function displayMessage(data) {
 
 adminSend.onclick = () => {
     if (!currentClient || !adminInput.value.trim()) return;
-    
+
     ws.send(JSON.stringify({
         recipientId: currentClient,
         message: adminInput.value,
         isAdmin: true
     }));
-    
+
     displayMessage({
         message: adminInput.value,
         isAdmin: true,
         timestamp: new Date().toISOString()
     });
-    
+
     adminInput.value = '';
 };
 
