@@ -2,6 +2,7 @@ const express = require('express');
 const { Server } = require('ws');
 const uuid = require('uuid');
 const path = require('path');
+const { exec } = require('child_process');
 
 const app = express();
 const port = 3000;
@@ -69,4 +70,14 @@ wss.on('connection', (ws, req) => {
       clients.delete(clientId);
     }
   });
+});
+
+// Automatically start the Node.js server using PM2
+exec('pm2 start server.js', (err, stdout, stderr) => {
+  if (err) {
+    console.error(`Erreur lors du démarrage du serveur: ${err}`);
+    return;
+  }
+  console.log(`Sortie du serveur: ${stdout}`);
+  console.error(`Erreur du serveur: ${stderr}`);
 });

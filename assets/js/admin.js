@@ -3,6 +3,7 @@ const clientsList = document.getElementById('clients-list');
 const chatMessages = document.getElementById('chat-messages');
 const adminInput = document.getElementById('admin-input');
 const adminSend = document.getElementById('admin-send');
+const notificationSound = document.getElementById('notification-sound');
 
 let currentClient = null;
 const conversations = new Map();
@@ -84,4 +85,5 @@ function notifyNewMessage(data) {
             icon: '../assets/images/GDG_PRODUCTIONS.png'
         });
     }
+    notificationSound.play();
 }
