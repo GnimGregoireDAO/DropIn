@@ -5,7 +5,7 @@ const path = require('path');
 const { exec } = require('child_process');
 
 const app = express();
-const port = 3000;
+const port = 3001; // Changé de 3000 à 3001
 
 // Servir les fichiers statiques
 app.use(express.static(path.join(__dirname, '../')));
