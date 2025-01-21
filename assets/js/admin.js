@@ -1,9 +1,18 @@
+
+const ws = new WebSocket('ws://localhost:3000?admin=true');
+const clientsList = document.getElementById('clients-list');
+const chatMessages = document.getElementById('chat-messages');
+const adminInput = document.getElementById('admin-input');
+const adminSend = document.getElementById('admin-send');
+const notificationSound = document.getElementById('notification-sound');
+=======
 document.addEventListener('DOMContentLoaded', () => {
     // Vérification de la connexion admin
     if (!localStorage.getItem('adminConnected') && !window.location.href.includes('login.html')) {
         window.location.href = './login.html';
         return;
     }
+
 
     // Gestion du formulaire de connexion
     const loginForm = document.getElementById('login-form');
@@ -13,6 +22,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
+
+ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+
+    if (data.type === 'newMessage') {
+        // Ajouter à la conversation
+        if (!conversations.has(data.clientId)) {
+            conversations.set(data.clientId, []);
+            addClientToList(data.clientId);
+        }
+        conversations.get(data.clientId).push(data);
+
+        // Si c'est le client actuel, afficher le message
+        if (currentClient === data.clientId) {
+            displayMessage(data);
+        }
+
+        // Notification
+        notifyNewMessage(data);
+=======
             // Vérification simple (à remplacer par une vraie authentification)
             if (username === "admin" && password === "dropin2024") {
                 localStorage.setItem('adminConnected', 'true');
@@ -21,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Identifiants incorrects');
             }
         });
+
     }
 
     // Gestion de l'interface admin
@@ -41,6 +71,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
+
+adminSend.onclick = () => {
+    if (!currentClient || !adminInput.value.trim()) return;
+
+    ws.send(JSON.stringify({
+        recipientId: currentClient,
+        message: adminInput.value,
+        isAdmin: true
+    }));
+
+    displayMessage({
+        message: adminInput.value,
+        isAdmin: true,
+        timestamp: new Date().toISOString()
+    });
+
+    adminInput.value = '';
+};
+=======
         function handleNewMessage(data) {
             // Ajouter le client à la liste s'il n'existe pas
             if (!document.getElementById(`client-${data.clientId}`)) {
@@ -51,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 clientDiv.onclick = () => selectClient(data.clientId);
                 clientsList.appendChild(clientDiv);
             }
+
 
             // Afficher le message si c'est le client sélectionné
             if (selectedClient === data.clientId) {
@@ -94,4 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
             chatMessages.scrollTop = chatMessages.scrollHeight;
         };
     }
+
+    notificationSound.play();
+}
+=======
 });
+
