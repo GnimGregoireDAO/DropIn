@@ -64,7 +64,7 @@ ws.onmessage = (event) => {
     } else if (data.type === 'stopTyping') {
         hideTypingIndicator();
     }
-});
+};
 
 function showTypingIndicator() {
     let typingIndicator = document.getElementById('typing-indicator');
@@ -191,7 +191,7 @@ ws.onmessage = (event) => {
         addMultimediaMessage(data.content, 'video/mp4', true);
         notifyNewMessage('Nouvelle vidéo reçue');
     }
-});
+};
 
 // Keyboard navigation for interactive elements
 document.addEventListener('keydown', (e) => {
