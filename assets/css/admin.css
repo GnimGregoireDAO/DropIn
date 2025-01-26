@@ -137,6 +137,39 @@ h2 {
     color: #fff;
 }
 
+/* High-contrast mode for users with visual impairments */
+@media (prefers-contrast: high) {
+    body {
+        background: #000;
+        color: #fff;
+    }
+
+    .login-form, .conversations-list, .chat-area {
+        background: #000;
+        color: #fff;
+    }
+
+    .client-message {
+        background: #333;
+    }
+
+    .admin-message {
+        background: #444;
+    }
+
+    .btn-primary {
+        background-color: #ff0;
+        border-color: #ff0;
+        color: #000;
+    }
+
+    .btn-primary:hover {
+        background-color: #cc0;
+        border-color: #cc0;
+        color: #000;
+    }
+}
+
 /* Media Queries for responsive design */
 @media (max-width: 1024px) {
     .admin-login {
