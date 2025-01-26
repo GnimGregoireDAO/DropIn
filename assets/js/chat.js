@@ -183,4 +183,34 @@ ws.onmessage = (event) => {
         addMultimediaMessage(data.content, data.fileType, true);
         notifyNewMessage('Nouveau fichier reçu');
     }
-};
+});
+
+// Keyboard navigation for interactive elements
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+        const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        const focusableContent = document.querySelectorAll(focusableElements);
+        const firstFocusableElement = focusableContent[0];
+        const lastFocusableElement = focusableContent[focusableContent.length - 1];
+
+        if (e.shiftKey) { // shift + tab
+            if (document.activeElement === firstFocusableElement) {
+                lastFocusableElement.focus();
+                e.preventDefault();
+            }
+        } else { // tab
+            if (document.activeElement === lastFocusableElement) {
+                firstFocusableElement.focus();
+                e.preventDefault();
+            }
+        }
+    }
+});
+
+// Ensure ARIA attributes are set dynamically where necessary
+const interactiveElements = document.querySelectorAll('button, input, [role="button"], [role="textbox"]');
+interactiveElements.forEach(element => {
+    if (!element.hasAttribute('aria-label')) {
+        element.setAttribute('aria-label', element.innerText || element.placeholder || 'Interactive element');
+    }
+});

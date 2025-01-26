@@ -237,6 +237,33 @@ footer {
     font-size: 1.2em;
 }
 
+/* Styles to indicate focus for keyboard navigation */
+input:focus, button:focus {
+    outline: 2px solid #ff7f50;
+    outline-offset: 2px;
+}
+
+/* Increased color contrast for better readability */
+body {
+    color: #333;
+}
+
+h2 {
+    color: #4a4a4a;
+}
+
+.btn-primary {
+    background-color: #8B5A54;
+    border-color: #8B5A54;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #6d463f;
+    border-color: #6d463f;
+    color: #fff;
+}
+
 @media (max-width: 1024px) {
     header h1 {
         font-size: 2.5em;
