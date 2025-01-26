@@ -222,3 +222,12 @@ interactiveElements.forEach(element => {
         element.setAttribute('aria-label', element.innerText || element.placeholder || 'Interactive element');
     }
 });
+
+// Dark mode toggle
+const darkModeToggle = document.createElement('button');
+darkModeToggle.textContent = 'Toggle Dark Mode';
+darkModeToggle.className = 'btn btn-dark';
+darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+});
+document.querySelector('.conteneur-de-saisie').appendChild(darkModeToggle);
