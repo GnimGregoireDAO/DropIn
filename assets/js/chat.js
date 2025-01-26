@@ -87,7 +87,7 @@ function hideTypingIndicator() {
 // Multimedia messages
 const fileInput = document.createElement('input');
 fileInput.type = 'file';
-fileInput.accept = 'image/*,audio/*';
+fileInput.accept = 'image/*,audio/*,video/*';
 fileInput.style.display = 'none';
 document.body.appendChild(fileInput);
 
@@ -116,6 +116,11 @@ function addMultimediaMessage(content, fileType, isReceived = false) {
         mediaElement = document.createElement('audio');
         mediaElement.src = content;
         mediaElement.controls = true;
+    } else if (fileType.startsWith('video/')) {
+        mediaElement = document.createElement('video');
+        mediaElement.src = content;
+        mediaElement.controls = true;
+        mediaElement.className = 'message-video';
     }
 
     const timestampSpan = document.createElement('span');
@@ -182,6 +187,9 @@ ws.onmessage = (event) => {
     } else if (data.type === 'multimedia') {
         addMultimediaMessage(data.content, data.fileType, true);
         notifyNewMessage('Nouveau fichier reçu');
+    } else if (data.type === 'video') {
+        addMultimediaMessage(data.content, 'video/mp4', true);
+        notifyNewMessage('Nouvelle vidéo reçue');
     }
 });
 
@@ -214,3 +222,12 @@ interactiveElements.forEach(element => {
         element.setAttribute('aria-label', element.innerText || element.placeholder || 'Interactive element');
     }
 });
+
+// Dark mode toggle
+const darkModeToggle = document.createElement('button');
+darkModeToggle.textContent = 'Toggle Dark Mode';
+darkModeToggle.className = 'btn btn-dark';
+darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+});
+document.querySelector('.conteneur-de-saisie').appendChild(darkModeToggle);

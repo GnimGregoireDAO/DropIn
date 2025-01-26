@@ -230,6 +230,14 @@ footer {
     margin-top: 10px;
 }
 
+/* Styles for video messages */
+.message-video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
 /* Styles for message reactions */
 .reaction {
     display: inline-block;
@@ -319,4 +327,34 @@ h2 {
         padding: 12px 20px;
         font-size: 1em;
     }
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .conteneur-de-saisie {
+    background-color: rgba(30, 30, 30, 0.8);
+}
+
+body.dark-mode .message.reçu {
+    background-color: #2c2c2c;
+}
+
+body.dark-mode .message.envoyé {
+    background-color: #3a3a3a;
+}
+
+body.dark-mode .btn-primary {
+    background-color: #bb86fc;
+    border-color: #bb86fc;
+    color: #000;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #9b67d3;
+    border-color: #9b67d3;
+    color: #000;
 }

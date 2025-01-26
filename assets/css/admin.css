@@ -95,6 +95,14 @@ h2 {
     margin-top: 10px;
 }
 
+/* Styles for video messages */
+.message-video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
 /* Styles for message reactions */
 .reaction {
     display: inline-block;
@@ -127,6 +135,39 @@ h2 {
     background-color: #6d463f;
     border-color: #6d463f;
     color: #fff;
+}
+
+/* High-contrast mode for users with visual impairments */
+@media (prefers-contrast: high) {
+    body {
+        background: #000;
+        color: #fff;
+    }
+
+    .login-form, .conversations-list, .chat-area {
+        background: #000;
+        color: #fff;
+    }
+
+    .client-message {
+        background: #333;
+    }
+
+    .admin-message {
+        background: #444;
+    }
+
+    .btn-primary {
+        background-color: #ff0;
+        border-color: #ff0;
+        color: #000;
+    }
+
+    .btn-primary:hover {
+        background-color: #cc0;
+        border-color: #cc0;
+        color: #000;
+    }
 }
 
 /* Media Queries for responsive design */
@@ -198,4 +239,37 @@ h2 {
     #chat-messages {
         padding: 0.5rem;
     }
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .login-form,
+body.dark-mode .conversations-list,
+body.dark-mode .chat-area {
+    background: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark-mode .client-message {
+    background: #2c2c2c;
+}
+
+body.dark-mode .admin-message {
+    background: #3a3a3a;
+}
+
+body.dark-mode .btn-primary {
+    background-color: #bb86fc;
+    border-color: #bb86fc;
+    color: #000;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #9b67d3;
+    border-color: #9b67d3;
+    color: #000;
 }
