@@ -3,22 +3,22 @@ const messageContainer = document.getElementById('message-container');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
 
-function addMessage(content, isReceived = false) {
+function addMessage(content, isReceived = false, timestamp = new Date()) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${isReceived ? 'reçu' : 'envoyé'}`;
     
     const messageContent = document.createElement('p');
     messageContent.textContent = content;
     
-    const timestamp = document.createElement('span');
-    timestamp.className = 'heure';
-    timestamp.textContent = new Date().toLocaleTimeString('fr-FR', {
+    const timestampSpan = document.createElement('span');
+    timestampSpan.className = 'heure';
+    timestampSpan.textContent = new Date(timestamp).toLocaleTimeString('fr-FR', {
         hour: '2-digit',
         minute: '2-digit'
     });
 
     messageDiv.appendChild(messageContent);
-    messageDiv.appendChild(timestamp);
+    messageDiv.appendChild(timestampSpan);
     messageContainer.appendChild(messageDiv);
     messageContainer.scrollTop = messageContainer.scrollHeight;
 }
@@ -41,6 +41,146 @@ messageInput.addEventListener('keypress', (e) => {
 ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
     if (data.type === 'adminResponse') {
-        addMessage(data.message, true);
+        addMessage(data.message, true, data.timestamp);
+    }
+};
+
+// Typing indicator
+let typingTimeout;
+messageInput.addEventListener('input', () => {
+    clearTimeout(typingTimeout);
+    ws.send(JSON.stringify({ type: 'typing' }));
+    typingTimeout = setTimeout(() => {
+        ws.send(JSON.stringify({ type: 'stopTyping' }));
+    }, 3000);
+});
+
+ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    if (data.type === 'adminResponse') {
+        addMessage(data.message, true, data.timestamp);
+    } else if (data.type === 'typing') {
+        showTypingIndicator();
+    } else if (data.type === 'stopTyping') {
+        hideTypingIndicator();
+    }
+});
+
+function showTypingIndicator() {
+    let typingIndicator = document.getElementById('typing-indicator');
+    if (!typingIndicator) {
+        typingIndicator = document.createElement('div');
+        typingIndicator.id = 'typing-indicator';
+        typingIndicator.className = 'typing-indicator';
+        typingIndicator.textContent = 'L\'autre personne est en train d\'écrire...';
+        messageContainer.appendChild(typingIndicator);
+    }
+}
+
+function hideTypingIndicator() {
+    const typingIndicator = document.getElementById('typing-indicator');
+    if (typingIndicator) {
+        typingIndicator.remove();
+    }
+}
+
+// Multimedia messages
+const fileInput = document.createElement('input');
+fileInput.type = 'file';
+fileInput.accept = 'image/*,audio/*';
+fileInput.style.display = 'none';
+document.body.appendChild(fileInput);
+
+fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            ws.send(JSON.stringify({ type: 'multimedia', content: reader.result, fileType: file.type }));
+            addMultimediaMessage(reader.result, file.type);
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+function addMultimediaMessage(content, fileType, isReceived = false) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${isReceived ? 'reçu' : 'envoyé'}`;
+    
+    let mediaElement;
+    if (fileType.startsWith('image/')) {
+        mediaElement = document.createElement('img');
+        mediaElement.src = content;
+        mediaElement.className = 'message-image';
+    } else if (fileType.startsWith('audio/')) {
+        mediaElement = document.createElement('audio');
+        mediaElement.src = content;
+        mediaElement.controls = true;
+    }
+
+    const timestampSpan = document.createElement('span');
+    timestampSpan.className = 'heure';
+    timestampSpan.textContent = new Date().toLocaleTimeString('fr-FR', {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+
+    messageDiv.appendChild(mediaElement);
+    messageDiv.appendChild(timestampSpan);
+    messageContainer.appendChild(messageDiv);
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+}
+
+const multimediaButton = document.createElement('button');
+multimediaButton.textContent = 'Envoyer un fichier';
+multimediaButton.className = 'btn btn-secondary';
+multimediaButton.addEventListener('click', () => {
+    fileInput.click();
+});
+document.querySelector('.conteneur-de-saisie').appendChild(multimediaButton);
+
+// Message reactions
+function addReaction(messageDiv, reaction) {
+    const reactionSpan = document.createElement('span');
+    reactionSpan.className = 'reaction';
+    reactionSpan.textContent = reaction;
+    messageDiv.appendChild(reactionSpan);
+}
+
+messageContainer.addEventListener('click', (e) => {
+    if (e.target.classList.contains('message')) {
+        const reaction = prompt('Réagir avec: (👍, ❤️, 😂, 😮, 😢, 😡)');
+        if (reaction) {
+            addReaction(e.target, reaction);
+        }
+    }
+});
+
+// Desktop notifications
+if (Notification.permission !== 'granted') {
+    Notification.requestPermission();
+}
+
+function notifyNewMessage(content) {
+    if (Notification.permission === 'granted') {
+        new Notification('Nouveau message', {
+            body: content,
+            icon: '../assets/images/GDG_PRODUCTIONS.png'
+        });
+    }
+}
+
+ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    if (data.type === 'adminResponse') {
+        addMessage(data.message, true, data.timestamp);
+        notifyNewMessage(data.message);
+    } else if (data.type === 'typing') {
+        showTypingIndicator();
+    } else if (data.type === 'stopTyping') {
+        hideTypingIndicator();
+    } else if (data.type === 'multimedia') {
+        addMultimediaMessage(data.content, data.fileType, true);
+        notifyNewMessage('Nouveau fichier reçu');
     }
 };

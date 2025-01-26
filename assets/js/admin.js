@@ -1,18 +1,9 @@
-
-const ws = new WebSocket('ws://localhost:3000?admin=true');
-const clientsList = document.getElementById('clients-list');
-const chatMessages = document.getElementById('chat-messages');
-const adminInput = document.getElementById('admin-input');
-const adminSend = document.getElementById('admin-send');
-const notificationSound = document.getElementById('notification-sound');
-=======
 document.addEventListener('DOMContentLoaded', () => {
     // Vérification de la connexion admin
     if (!localStorage.getItem('adminConnected') && !window.location.href.includes('login.html')) {
         window.location.href = './login.html';
         return;
     }
-
 
     // Gestion du formulaire de connexion
     const loginForm = document.getElementById('login-form');
@@ -22,26 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-
-ws.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-
-    if (data.type === 'newMessage') {
-        // Ajouter à la conversation
-        if (!conversations.has(data.clientId)) {
-            conversations.set(data.clientId, []);
-            addClientToList(data.clientId);
-        }
-        conversations.get(data.clientId).push(data);
-
-        // Si c'est le client actuel, afficher le message
-        if (currentClient === data.clientId) {
-            displayMessage(data);
-        }
-
-        // Notification
-        notifyNewMessage(data);
-=======
             // Vérification simple (à remplacer par une vraie authentification)
             if (username === "admin" && password === "dropin2024") {
                 localStorage.setItem('adminConnected', 'true');
@@ -50,7 +21,6 @@ ws.onmessage = (event) => {
                 alert('Identifiants incorrects');
             }
         });
-
     }
 
     // Gestion de l'interface admin
@@ -58,38 +28,56 @@ ws.onmessage = (event) => {
     const adminSend = document.getElementById('admin-send');
     const clientsList = document.getElementById('clients-list');
     const chatMessages = document.getElementById('chat-messages');
+    const notificationSound = document.getElementById('notification-sound');
 
     if (adminInput && adminSend) {
         const ws = new WebSocket('ws://localhost:3001?admin=true');
         let selectedClient = null;
+        let typingTimeout;
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
             if (data.type === 'newMessage') {
                 handleNewMessage(data);
                 notifyNewMessage(data);
+            } else if (data.type === 'typing') {
+                showTypingIndicator(data.clientId);
             }
         };
 
+        adminSend.onclick = () => {
+            if (!selectedClient || !adminInput.value.trim()) return;
 
-adminSend.onclick = () => {
-    if (!currentClient || !adminInput.value.trim()) return;
+            ws.send(JSON.stringify({
+                recipientId: selectedClient,
+                message: adminInput.value
+            }));
 
-    ws.send(JSON.stringify({
-        recipientId: currentClient,
-        message: adminInput.value,
-        isAdmin: true
-    }));
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message admin-message';
+            messageDiv.innerHTML = `
+                <div class="message-time">${new Date().toLocaleTimeString()}</div>
+                <div class="message-content">${adminInput.value}</div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            adminInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        };
 
-    displayMessage({
-        message: adminInput.value,
-        isAdmin: true,
-        timestamp: new Date().toISOString()
-    });
+        adminInput.addEventListener('input', () => {
+            clearTimeout(typingTimeout);
+            ws.send(JSON.stringify({
+                type: 'typing',
+                clientId: selectedClient
+            }));
+            typingTimeout = setTimeout(() => {
+                ws.send(JSON.stringify({
+                    type: 'stopTyping',
+                    clientId: selectedClient
+                }));
+            }, 3000);
+        });
 
-    adminInput.value = '';
-};
-=======
         function handleNewMessage(data) {
             // Ajouter le client à la liste s'il n'existe pas
             if (!document.getElementById(`client-${data.clientId}`)) {
@@ -100,7 +88,6 @@ adminSend.onclick = () => {
                 clientDiv.onclick = () => selectClient(data.clientId);
                 clientsList.appendChild(clientDiv);
             }
-
 
             // Afficher le message si c'est le client sélectionné
             if (selectedClient === data.clientId) {
@@ -125,28 +112,29 @@ adminSend.onclick = () => {
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        adminSend.onclick = () => {
-            if (!selectedClient || !adminInput.value.trim()) return;
+        function showTypingIndicator(clientId) {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (!typingIndicator) {
+                const indicator = document.createElement('div');
+                indicator.id = 'typing-indicator';
+                indicator.className = 'typing-indicator';
+                indicator.textContent = `Client ${clientId.slice(0, 8)}... est en train d'écrire...`;
+                chatMessages.appendChild(indicator);
+            }
+        }
 
-            ws.send(JSON.stringify({
-                recipientId: selectedClient,
-                message: adminInput.value
-            }));
+        function notifyNewMessage(data) {
+            notificationSound.play();
+            if (Notification.permission === 'granted') {
+                new Notification('Nouveau message de Client ' + data.clientId.slice(0, 8), {
+                    body: data.message,
+                    icon: '../assets/images/GDG_PRODUCTIONS.png'
+                });
+            }
+        }
 
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'chat-message admin-message';
-            messageDiv.innerHTML = `
-                <div class="message-time">${new Date().toLocaleTimeString()}</div>
-                <div class="message-content">${adminInput.value}</div>
-            `;
-            chatMessages.appendChild(messageDiv);
-            adminInput.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        };
+        if (Notification.permission !== 'granted') {
+            Notification.requestPermission();
+        }
     }
-
-    notificationSound.play();
-}
-=======
 });
-

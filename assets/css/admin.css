@@ -80,6 +80,28 @@ h2 {
     display: none;
 }
 
+/* Styles for the typing indicator */
+.typing-indicator {
+    font-style: italic;
+    color: #888;
+    margin-top: 10px;
+}
+
+/* Styles for multimedia messages */
+.message-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Styles for message reactions */
+.reaction {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 1.2em;
+}
+
 /* Media Queries for responsive design */
 @media (max-width: 1024px) {
     .admin-login {
