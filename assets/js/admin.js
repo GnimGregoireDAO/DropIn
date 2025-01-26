@@ -28,18 +28,63 @@ document.addEventListener('DOMContentLoaded', () => {
     const adminSend = document.getElementById('admin-send');
     const clientsList = document.getElementById('clients-list');
     const chatMessages = document.getElementById('chat-messages');
+    const notificationSound = document.getElementById('notification-sound');
 
     if (adminInput && adminSend) {
         const ws = new WebSocket('ws://localhost:3001?admin=true');
         let selectedClient = null;
+        let typingTimeout;
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
             if (data.type === 'newMessage') {
                 handleNewMessage(data);
                 notifyNewMessage(data);
+            } else if (data.type === 'typing') {
+                showTypingIndicator(data.clientId);
+            } else if (data.type === 'stopTyping') {
+                hideTypingIndicator();
+            } else if (data.type === 'multimedia') {
+                addMultimediaMessage(data.content, data.fileType, true);
+                notifyNewMessage('Nouveau fichier reçu');
+            } else if (data.type === 'video') {
+                addMultimediaMessage(data.content, 'video/mp4', true);
+                notifyNewMessage('Nouvelle vidéo reçue');
             }
         };
+
+        adminSend.onclick = () => {
+            if (!selectedClient || !adminInput.value.trim()) return;
+
+            ws.send(JSON.stringify({
+                recipientId: selectedClient,
+                message: adminInput.value
+            }));
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message admin-message';
+            messageDiv.innerHTML = `
+                <div class="message-time">${new Date().toLocaleTimeString()}</div>
+                <div class="message-content">${adminInput.value}</div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            adminInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        };
+
+        adminInput.addEventListener('input', () => {
+            clearTimeout(typingTimeout);
+            ws.send(JSON.stringify({
+                type: 'typing',
+                clientId: selectedClient
+            }));
+            typingTimeout = setTimeout(() => {
+                ws.send(JSON.stringify({
+                    type: 'stopTyping',
+                    clientId: selectedClient
+                }));
+            }, 3000);
+        });
 
         function handleNewMessage(data) {
             // Ajouter le client à la liste s'il n'existe pas
@@ -75,22 +120,84 @@ document.addEventListener('DOMContentLoaded', () => {
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        adminSend.onclick = () => {
-            if (!selectedClient || !adminInput.value.trim()) return;
+        function showTypingIndicator(clientId) {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (!typingIndicator) {
+                const indicator = document.createElement('div');
+                indicator.id = 'typing-indicator';
+                indicator.className = 'typing-indicator';
+                indicator.textContent = `Client ${clientId.slice(0, 8)}... est en train d'écrire...`;
+                chatMessages.appendChild(indicator);
+            }
+        }
 
-            ws.send(JSON.stringify({
-                recipientId: selectedClient,
-                message: adminInput.value
-            }));
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
 
+        function notifyNewMessage(data) {
+            notificationSound.play();
+            if (Notification.permission === 'granted') {
+                new Notification('Nouveau message de Client ' + data.clientId.slice(0, 8), {
+                    body: data.message,
+                    icon: '../assets/images/GDG_PRODUCTIONS.png'
+                });
+            }
+        }
+
+        if (Notification.permission !== 'granted') {
+            Notification.requestPermission();
+        }
+
+        // Multimedia messages
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*,audio/*,video/*';
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    ws.send(JSON.stringify({ type: 'multimedia', content: reader.result, fileType: file.type }));
+                    addMultimediaMessage(reader.result, file.type);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function addMultimediaMessage(content, fileType, isReceived = false) {
             const messageDiv = document.createElement('div');
-            messageDiv.className = 'chat-message admin-message';
-            messageDiv.innerHTML = `
-                <div class="message-time">${new Date().toLocaleTimeString()}</div>
-                <div class="message-content">${adminInput.value}</div>
-            `;
+            messageDiv.className = `chat-message ${isReceived ? 'client-message' : 'admin-message'}`;
+            
+            let mediaElement;
+            if (fileType.startsWith('image/')) {
+                mediaElement = document.createElement('img');
+                mediaElement.src = content;
+                mediaElement.className = 'message-image';
+            } else if (fileType.startsWith('audio/')) {
+                mediaElement = document.createElement('audio');
+                mediaElement.src = content;
+                mediaElement.controls = true;
+            } else if (fileType.startsWith('video/')) {
+                mediaElement = document.createElement('video');
+                mediaElement.src = content;
+                mediaElement.controls = true;
+                mediaElement.className = 'message-video';
+            }
+
+            const timestampSpan = document.createElement('span');
+            timestampSpan.className = 'message-time';
+            timestampSpan.textContent = new Date().toLocaleTimeString();
+
+            messageDiv.appendChild(mediaElement);
+            messageDiv.appendChild(timestampSpan);
             chatMessages.appendChild(messageDiv);
-            adminInput.value = '';
             chatMessages.scrollTop = chatMessages.scrollHeight;
         };
     }
