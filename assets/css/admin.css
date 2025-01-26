@@ -79,3 +79,74 @@ h2 {
 #notification-sound {
     display: none;
 }
+
+/* Media Queries for responsive design */
+@media (max-width: 1024px) {
+    .admin-login {
+        height: auto;
+        padding: 2rem;
+    }
+
+    .login-form {
+        padding: 1.5rem;
+        max-width: 350px;
+    }
+
+    .conversations-list {
+        padding: 0.5rem;
+    }
+
+    .chat-area {
+        padding: 0.5rem;
+    }
+
+    #chat-messages {
+        padding: 0.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-login {
+        padding: 1.5rem;
+    }
+
+    .login-form {
+        padding: 1rem;
+        max-width: 300px;
+    }
+
+    .conversations-list {
+        padding: 0.5rem;
+    }
+
+    .chat-area {
+        padding: 0.5rem;
+    }
+
+    #chat-messages {
+        padding: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-login {
+        padding: 1rem;
+    }
+
+    .login-form {
+        padding: 0.5rem;
+        max-width: 250px;
+    }
+
+    .conversations-list {
+        padding: 0.5rem;
+    }
+
+    .chat-area {
+        padding: 0.5rem;
+    }
+
+    #chat-messages {
+        padding: 0.5rem;
+    }
+}
