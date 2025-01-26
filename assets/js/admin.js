@@ -47,6 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (data.type === 'multimedia') {
                 addMultimediaMessage(data.content, data.fileType, true);
                 notifyNewMessage('Nouveau fichier reçu');
+            } else if (data.type === 'video') {
+                addMultimediaMessage(data.content, 'video/mp4', true);
+                notifyNewMessage('Nouvelle vidéo reçue');
             }
         };
 
@@ -152,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Multimedia messages
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
-        fileInput.accept = 'image/*,audio/*';
+        fileInput.accept = 'image/*,audio/*,video/*';
         fileInput.style.display = 'none';
         document.body.appendChild(fileInput);
 
@@ -181,6 +184,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 mediaElement = document.createElement('audio');
                 mediaElement.src = content;
                 mediaElement.controls = true;
+            } else if (fileType.startsWith('video/')) {
+                mediaElement = document.createElement('video');
+                mediaElement.src = content;
+                mediaElement.controls = true;
+                mediaElement.className = 'message-video';
             }
 
             const timestampSpan = document.createElement('span');
@@ -217,5 +225,44 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
+
+        // Keyboard navigation for interactive elements
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+                const focusableContent = document.querySelectorAll(focusableElements);
+                const firstFocusableElement = focusableContent[0];
+                const lastFocusableElement = focusableContent[focusableContent.length - 1];
+
+                if (e.shiftKey) { // shift + tab
+                    if (document.activeElement === firstFocusableElement) {
+                        lastFocusableElement.focus();
+                        e.preventDefault();
+                    }
+                } else { // tab
+                    if (document.activeElement === lastFocusableElement) {
+                        firstFocusableElement.focus();
+                        e.preventDefault();
+                    }
+                }
+            }
+        });
+
+        // Ensure ARIA attributes are set dynamically where necessary
+        const interactiveElements = document.querySelectorAll('button, input, [role="button"], [role="textbox"]');
+        interactiveElements.forEach(element => {
+            if (!element.hasAttribute('aria-label')) {
+                element.setAttribute('aria-label', element.innerText || element.placeholder || 'Interactive element');
+            }
+        });
+
+        // Dark mode toggle
+        const darkModeToggle = document.createElement('button');
+        darkModeToggle.textContent = 'Toggle Dark Mode';
+        darkModeToggle.className = 'btn btn-dark';
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+        document.querySelector('.input-group').appendChild(darkModeToggle);
     }
 });
