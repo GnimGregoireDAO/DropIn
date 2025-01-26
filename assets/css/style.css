@@ -261,3 +261,82 @@ body {
         background-position: -200% center;
     }
 }
+
+/* Media Queries for responsive design */
+@media (max-width: 1024px) {
+    .header {
+        padding: 3rem 1.5rem;
+    }
+
+    .mission-section {
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+    }
+
+    .contact-section {
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+    }
+
+    .social-link {
+        padding: 8px 16px;
+        margin: 8px;
+    }
+
+    .btn-retour {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 2.5rem 1rem;
+    }
+
+    .mission-section {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+
+    .contact-section {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+
+    .social-link {
+        padding: 6px 12px;
+        margin: 6px;
+    }
+
+    .btn-retour {
+        padding: 6px 12px;
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 2rem 0.5rem;
+    }
+
+    .mission-section {
+        padding: 0.5rem;
+        margin: 0.5rem 0;
+    }
+
+    .contact-section {
+        padding: 0.5rem;
+        margin: 0.5rem 0;
+    }
+
+    .social-link {
+        padding: 4px 8px;
+        margin: 4px;
+    }
+
+    .btn-retour {
+        padding: 4px 8px;
+        font-size: 0.7em;
+    }
+}
