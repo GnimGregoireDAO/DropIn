@@ -230,6 +230,14 @@ footer {
     margin-top: 10px;
 }
 
+/* Styles for video messages */
+.message-video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
 /* Styles for message reactions */
 .reaction {
     display: inline-block;
