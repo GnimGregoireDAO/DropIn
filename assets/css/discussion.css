@@ -215,6 +215,63 @@ footer {
     vertical-align: middle;
 }
 
+/* Styles for the typing indicator */
+.typing-indicator {
+    font-style: italic;
+    color: #888;
+    margin-top: 10px;
+}
+
+/* Styles for multimedia messages */
+.message-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Styles for video messages */
+.message-video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Styles for message reactions */
+.reaction {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 1.2em;
+}
+
+/* Styles to indicate focus for keyboard navigation */
+input:focus, button:focus {
+    outline: 2px solid #ff7f50;
+    outline-offset: 2px;
+}
+
+/* Increased color contrast for better readability */
+body {
+    color: #333;
+}
+
+h2 {
+    color: #4a4a4a;
+}
+
+.btn-primary {
+    background-color: #8B5A54;
+    border-color: #8B5A54;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #6d463f;
+    border-color: #6d463f;
+    color: #fff;
+}
+
 @media (max-width: 1024px) {
     header h1 {
         font-size: 2.5em;
@@ -270,4 +327,34 @@ footer {
         padding: 12px 20px;
         font-size: 1em;
     }
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .conteneur-de-saisie {
+    background-color: rgba(30, 30, 30, 0.8);
+}
+
+body.dark-mode .message.reçu {
+    background-color: #2c2c2c;
+}
+
+body.dark-mode .message.envoyé {
+    background-color: #3a3a3a;
+}
+
+body.dark-mode .btn-primary {
+    background-color: #bb86fc;
+    border-color: #bb86fc;
+    color: #000;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #9b67d3;
+    border-color: #9b67d3;
+    color: #000;
 }

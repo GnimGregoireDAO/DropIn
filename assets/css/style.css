@@ -340,3 +340,54 @@ body {
         font-size: 0.7em;
     }
 }
+
+/* Increased color contrast for better readability */
+body {
+    color: #333;
+}
+
+h2 {
+    color: #4a4a4a;
+}
+
+.btn-primary {
+    background-color: #8B5A54;
+    border-color: #8B5A54;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #6d463f;
+    border-color: #6d463f;
+    color: #fff;
+}
+
+/* High-contrast mode for users with visual impairments */
+@media (prefers-contrast: high) {
+    body {
+        background: #000;
+        color: #fff;
+    }
+
+    .mission-section, .contact-section, .bio-section {
+        background: #000;
+        color: #fff;
+    }
+
+    .social-link {
+        background: #fff;
+        color: #000;
+    }
+
+    .btn-primary {
+        background-color: #ff0;
+        border-color: #ff0;
+        color: #000;
+    }
+
+    .btn-primary:hover {
+        background-color: #cc0;
+        border-color: #cc0;
+        color: #000;
+    }
+}

@@ -17,11 +17,14 @@
             <div class="col-md-8 chat-area">
                 <div id="chat-messages"></div>
                 <div class="input-group mt-3">
-                    <input type="text" id="admin-input" class="form-control" placeholder="Répondre...">
-                    <button id="admin-send" class="btn btn-primary">Envoyer</button>
+                    <input type="text" id="admin-input" class="form-control" placeholder="Répondre..." aria-label="Répondre" tabindex="0">
+                    <button id="admin-send" class="btn btn-primary" aria-label="Envoyer" tabindex="0">Envoyer</button>
+                    <button id="dark-mode-toggle" class="btn btn-dark" aria-label="Toggle Dark Mode" tabindex="0">Toggle Dark Mode</button>
                 </div>
             </div>
         </div>
     </div>
     <audio id="notification-sound" src="../assets/sounds/notification.mp3" preload="auto"></audio>
     <script src="../assets/js/admin.js"></script>
+</body>
+</html>
