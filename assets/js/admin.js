@@ -42,6 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 notifyNewMessage(data);
             } else if (data.type === 'typing') {
                 showTypingIndicator(data.clientId);
+            } else if (data.type === 'stopTyping') {
+                hideTypingIndicator();
+            } else if (data.type === 'multimedia') {
+                addMultimediaMessage(data.content, data.fileType, true);
+                notifyNewMessage('Nouveau fichier reçu');
             }
         };
 
@@ -123,6 +128,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
         function notifyNewMessage(data) {
             notificationSound.play();
             if (Notification.permission === 'granted') {
@@ -136,5 +148,74 @@ document.addEventListener('DOMContentLoaded', () => {
         if (Notification.permission !== 'granted') {
             Notification.requestPermission();
         }
+
+        // Multimedia messages
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*,audio/*';
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    ws.send(JSON.stringify({ type: 'multimedia', content: reader.result, fileType: file.type }));
+                    addMultimediaMessage(reader.result, file.type);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function addMultimediaMessage(content, fileType, isReceived = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${isReceived ? 'client-message' : 'admin-message'}`;
+            
+            let mediaElement;
+            if (fileType.startsWith('image/')) {
+                mediaElement = document.createElement('img');
+                mediaElement.src = content;
+                mediaElement.className = 'message-image';
+            } else if (fileType.startsWith('audio/')) {
+                mediaElement = document.createElement('audio');
+                mediaElement.src = content;
+                mediaElement.controls = true;
+            }
+
+            const timestampSpan = document.createElement('span');
+            timestampSpan.className = 'message-time';
+            timestampSpan.textContent = new Date().toLocaleTimeString();
+
+            messageDiv.appendChild(mediaElement);
+            messageDiv.appendChild(timestampSpan);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        const multimediaButton = document.createElement('button');
+        multimediaButton.textContent = 'Envoyer un fichier';
+        multimediaButton.className = 'btn btn-secondary';
+        multimediaButton.addEventListener('click', () => {
+            fileInput.click();
+        });
+        document.querySelector('.input-group').appendChild(multimediaButton);
+
+        // Message reactions
+        function addReaction(messageDiv, reaction) {
+            const reactionSpan = document.createElement('span');
+            reactionSpan.className = 'reaction';
+            reactionSpan.textContent = reaction;
+            messageDiv.appendChild(reactionSpan);
+        }
+
+        chatMessages.addEventListener('click', (e) => {
+            if (e.target.classList.contains('chat-message')) {
+                const reaction = prompt('Réagir avec: (👍, ❤️, 😂, 😮, 😢, 😡)');
+                if (reaction) {
+                    addReaction(e.target, reaction);
+                }
+            }
+        });
     }
 });
