@@ -240,3 +240,36 @@ h2 {
         padding: 0.5rem;
     }
 }
+
+/* Dark mode styles */
+body.dark-mode {
+    background: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .login-form,
+body.dark-mode .conversations-list,
+body.dark-mode .chat-area {
+    background: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark-mode .client-message {
+    background: #2c2c2c;
+}
+
+body.dark-mode .admin-message {
+    background: #3a3a3a;
+}
+
+body.dark-mode .btn-primary {
+    background-color: #bb86fc;
+    border-color: #bb86fc;
+    color: #000;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #9b67d3;
+    border-color: #9b67d3;
+    color: #000;
+}
