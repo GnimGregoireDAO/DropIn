@@ -1,0 +1,421 @@
+/* Styles spécifiques pour la page des poèmes */
+
+.poeme-intro {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.poeme-creation {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 2rem;
+}
+
+.input-area {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 2rem;
+}
+
+#premier-mot {
+  flex-grow: 1;
+  padding: 12px 15px;
+  border-radius: 25px;
+  border: 2px solid #e8a87c;
+  transition: all 0.3s ease;
+  font-size: 1.1em;
+}
+
+#premier-mot:focus {
+  outline: none;
+  border-color: #8b5a54;
+  box-shadow: 0 0 10px rgba(139, 90, 84, 0.3);
+}
+
+#commencer-poeme {
+  background: linear-gradient(135deg, #e8a87c, #b3e1e1);
+  border: none;
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-weight: bold;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+#commencer-poeme:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  animation: gradientAnimation 2s infinite;
+}
+
+.poem-construction-area {
+  background: rgba(248, 248, 248, 0.95);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+  transition: all 0.5s ease;
+}
+
+.current-poem {
+  font-family: "Georgia", serif;
+  font-size: 1.3em;
+  line-height: 1.8;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 10px;
+  min-height: 150px;
+  margin-bottom: 1.5rem;
+  border-left: 5px solid #e8a87c;
+  white-space: pre-line;
+  transition: all 0.3s ease;
+}
+
+.suggestions-container {
+  margin: 1.5rem 0;
+}
+
+.word-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.suggestion-word {
+  background: linear-gradient(135deg, #e8a87c, #b3e1e1);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.suggestion-word:hover {
+  transform: scale(1.05);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.poem-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+#finaliser-poeme {
+  background: #8b5a54;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+#finaliser-poeme:hover {
+  background: #6d463f;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#recommencer-poeme {
+  border-color: #8b5a54;
+  color: #8b5a54;
+  transition: all 0.3s ease;
+}
+
+#recommencer-poeme:hover {
+  background: rgba(139, 90, 84, 0.1);
+  transform: translateY(-3px);
+}
+
+.poemes-galerie {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.poeme-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border-left: 5px solid #b3e1e1;
+}
+
+.poeme-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.poeme-text {
+  font-family: "Georgia", serif;
+  font-size: 1.1em;
+  line-height: 1.8;
+  white-space: pre-line;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.poeme-date {
+  font-size: 0.9em;
+  color: #777;
+  text-align: right;
+  font-style: italic;
+}
+
+.poeme-emotions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 1rem;
+}
+
+.emotion-tag {
+  background: rgba(232, 168, 124, 0.2);
+  color: #8b5a54;
+  padding: 3px 10px;
+  border-radius: 15px;
+  font-size: 0.85em;
+}
+
+/* Styles pour les suggestions alternatives */
+.fallback-notice {
+  background-color: rgba(179, 225, 225, 0.3);
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 0.9em;
+  color: #8b5a54;
+  text-align: center;
+}
+
+.fallback-notice i {
+  margin-right: 5px;
+}
+
+body.dark-mode .fallback-notice {
+  background-color: rgba(187, 134, 252, 0.1);
+  color: #bb86fc;
+}
+
+/* Animation pour l'apparition des éléments */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Styles pour l'animation de chargement */
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(232, 168, 124, 0.2);
+  border-radius: 50%;
+  border-top-color: #e8a87c;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .input-area {
+    flex-direction: column;
+  }
+
+  #commencer-poeme {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .poem-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #finaliser-poeme,
+  #recommencer-poeme {
+    width: 100%;
+  }
+}
+
+/* Dark mode styles */
+body.dark-mode .poeme-intro,
+body.dark-mode .poeme-creation,
+body.dark-mode .poemes-galerie {
+  background: rgba(30, 30, 30, 0.9);
+  color: #e0e0e0;
+}
+
+body.dark-mode .poem-construction-area {
+  background: rgba(40, 40, 40, 0.95);
+}
+
+body.dark-mode .current-poem {
+  background: #1e1e1e;
+  color: #e0e0e0;
+  border-left: 5px solid #bb86fc;
+}
+
+body.dark-mode .suggestion-word {
+  background: linear-gradient(135deg, #bb86fc, #03dac6);
+}
+
+body.dark-mode #premier-mot {
+  background: #1e1e1e;
+  border: 2px solid #bb86fc;
+  color: #e0e0e0;
+}
+
+body.dark-mode .poeme-card {
+  background: #1e1e1e;
+  border-left: 5px solid #03dac6;
+}
+
+body.dark-mode .poeme-text {
+  color: #e0e0e0;
+}
+
+body.dark-mode .emotion-tag {
+  background: rgba(187, 134, 252, 0.2);
+  color: #bb86fc;
+}
+
+body.dark-mode .spinner {
+  border: 4px solid rgba(187, 134, 252, 0.2);
+  border-top-color: #bb86fc;
+}
+
+/* Styles pour l'explication des émotions */
+.emotion-explanation {
+  margin-bottom: 1.5rem;
+}
+
+.emotion-bubble {
+  background: linear-gradient(135deg, #f0f8ff, #e6f2ff);
+  border-radius: 15px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid #b3e1e1;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.6s ease-in;
+}
+
+.emotion-bubble:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.emotion-name {
+  font-style: italic;
+  color: #8b5a54;
+  font-weight: 600;
+}
+
+.emotion-bubble h5 {
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.emotion-bubble p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Animation pour les suggestions plus variées */
+.suggestion-word {
+  position: relative;
+}
+
+.suggestion-word:nth-child(1) {
+  background: linear-gradient(135deg, #e8a87c, #c38d9e);
+  animation-delay: 0.1s;
+}
+
+.suggestion-word:nth-child(2) {
+  background: linear-gradient(135deg, #85cdca, #41b3a3);
+  animation-delay: 0.2s;
+}
+
+.suggestion-word:nth-child(3) {
+  background: linear-gradient(135deg, #c38d9e, #e27d60);
+  animation-delay: 0.3s;
+}
+
+/* Mode sombre pour la bulle d'émotion */
+body.dark-mode .emotion-bubble {
+  background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+  border-left: 5px solid #bb86fc;
+}
+
+body.dark-mode .emotion-name {
+  color: #bb86fc;
+}
+
+body.dark-mode .emotion-bubble h5,
+body.dark-mode .emotion-bubble p {
+  color: #e1e1e1;
+}
+
+/* Messages de confirmation */
+.message {
+  position: fixed;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: 500;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+.message.show {
+  bottom: 30px;
+  opacity: 1;
+}
+
+.message-success {
+  background: linear-gradient(135deg, #41b3a3, #85cdca);
+  color: white;
+}
+
+.message-info {
+  background: linear-gradient(135deg, #5b86e5, #36d1dc);
+  color: white;
+}
+
+.message-error {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: white;
+}

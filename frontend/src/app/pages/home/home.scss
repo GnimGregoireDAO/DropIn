@@ -1,0 +1,387 @@
+// Variables
+$primary-color: var(--primary-color, #YOUR_PRIMARY_COLOR);
+$secondary-color: var(--secondary-color, #YOUR_SECONDARY_COLOR);
+$accent-color: var(--accent-color, #YOUR_ACCENT_COLOR);
+$text-light: #ffffff;
+$text-dark: #333333;
+$background-light: #f5f5f5;
+$background-color: #FAF5F5;
+$header-gradient-start: #E8A87C;
+$header-gradient-end: #B3E1E1;
+$contact-bg: #8B5A54;
+$box-shadow-light: 0 2px 10px rgba(0, 0, 0, 0.1);
+$box-shadow-medium: 0 5px 15px rgba(0, 0, 0, 0.2);
+$transition-standard: all 0.3s ease;
+$border-radius-standard: 10px;
+$border-radius-pill: 25px;
+$border-radius-circle: 50%;
+
+// Mixins
+@mixin gradient-bg($direction, $start-color, $end-color) {
+  background: linear-gradient($direction, $start-color, $end-color);
+}
+
+@mixin box-shadow($shadow) {
+  box-shadow: $shadow;
+}
+
+@mixin transition($transition) {
+  transition: $transition;
+}
+
+@mixin hover-lift($amount: -5px) {
+  &:hover {
+    transform: translateY($amount);
+  }
+}
+
+@mixin responsive-padding($desktop, $tablet: $desktop * 0.75, $mobile: $tablet * 0.75, $small-mobile: $mobile * 0.5) {
+  padding: $desktop;
+
+  @media (max-width: 1024px) {
+    padding: $tablet;
+  }
+
+  @media (max-width: 768px) {
+    padding: $mobile;
+  }
+
+  @media (max-width: 480px) {
+    padding: $small-mobile;
+  }
+}
+
+@mixin responsive-margin($desktop, $tablet: $desktop * 0.75, $mobile: $tablet * 0.75, $small-mobile: $mobile * 0.5) {
+  margin: $desktop;
+
+  @media (max-width: 1024px) {
+    margin: $tablet;
+  }
+
+  @media (max-width: 768px) {
+    margin: $mobile;
+  }
+
+  @media (max-width: 480px) {
+    margin: $small-mobile;
+  }
+}
+
+// CSS Root équivalent en SCSS
+:root {
+  --primary-color: #{$primary-color};
+  --secondary-color: #{$secondary-color};
+  --accent-color: #{$accent-color};
+  --text-light: #{$text-light};
+  --text-dark: #{$text-dark};
+  --background-light: #{$background-light};
+}
+
+// Styles
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: $background-color;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #333;
+}
+
+.header {
+  @include gradient-bg(135deg, $header-gradient-start, $header-gradient-end);
+  color: white;
+  text-align: center;
+  @include responsive-padding(4rem 2rem, 3rem 1.5rem, 2.5rem 1rem, 2rem 0.5rem);
+  position: relative;
+  overflow: hidden;
+
+  .company-logo {
+    width: 150px;
+    margin-bottom: 20px;
+    border-radius: $border-radius-circle;
+    object-fit: cover;
+  }
+}
+
+.mission-section {
+  background: $background-color;
+  border-radius: $border-radius-standard;
+  @include responsive-padding(2rem, 1.5rem, 1rem, 0.5rem);
+  @include responsive-margin(2rem 0, 1.5rem 0, 1rem 0, 0.5rem 0);
+  @include box-shadow($box-shadow-light);
+  @include transition(transform 0.3s ease);
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.contact-section {
+  background: $contact-bg;
+  color: white;
+  border-radius: $border-radius-standard;
+  @include responsive-padding(2rem, 1.5rem, 1rem, 0.5rem);
+  @include responsive-margin(2rem 0, 1.5rem 0, 1rem 0, 0.5rem 0);
+  text-align: center;
+  position: relative;
+
+  h2 {
+    color: white;
+  }
+}
+
+.social-link {
+  display: inline-block;
+  @include responsive-padding(10px 20px, 8px 16px, 6px 12px, 4px 8px);
+  background: white;
+  color: $contact-bg;
+  text-decoration: none;
+  border-radius: $border-radius-pill;
+  @include responsive-margin(10px, 8px, 6px, 4px);
+  font-weight: bold;
+  @include transition($transition-standard);
+
+  &:hover {
+    transform: translateY(-3px);
+    @include box-shadow($box-shadow-medium);
+  }
+}
+
+// Animation classes
+.fade-in {
+  animation: fadeIn 1s ease-in;
+}
+
+// Keyframe animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background: linear-gradient(135deg, $header-gradient-start, $header-gradient-end);
+  }
+  50% {
+    background: linear-gradient(135deg, $header-gradient-end, $header-gradient-start);
+  }
+  100% {
+    background: linear-gradient(135deg, $header-gradient-start, $header-gradient-end);
+  }
+}
+
+@keyframes donationGlow {
+  0% {
+    box-shadow: 0 0 5px rgba(232, 168, 124, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(179, 225, 225, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(232, 168, 124, 0.5);
+  }
+}
+
+@keyframes shine {
+  from {
+    background-position: 200% center;
+  }
+  to {
+    background-position: -200% center;
+  }
+}
+
+// Boutons et éléments d'interface
+.btn-retour {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  @include gradient-bg(135deg, $header-gradient-start, $header-gradient-end);
+  color: white;
+  @include responsive-padding(10px 20px, 8px 16px, 6px 12px, 4px 8px);
+  border-radius: 20px;
+  text-decoration: none;
+  @include box-shadow($box-shadow-light);
+  z-index: 1000;
+  @include transition(transform 0.3s ease);
+  font-size: 1em;
+  font-weight: bold;
+  border: 1px solid white;
+
+  @media (max-width: 1024px) {
+    font-size: 0.9em;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.8em;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.7em;
+  }
+
+  &:hover {
+    animation: gradientAnimation 2s infinite;
+    transform: translateX(-5px);
+    text-decoration: none;
+    color: white;
+  }
+
+  span {
+    font-size: 1.2em;
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.funding-button {
+  position: fixed;
+  right: 15px;
+  top: 15px;
+  z-index: 1000;
+
+  a.btn-primary {
+    @include gradient-bg(45deg, $header-gradient-start, $header-gradient-end);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    @include transition($transition-standard);
+    animation: donationGlow 2s infinite;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9em;
+
+    &:hover {
+      transform: scale(1.05);
+      @include gradient-bg(45deg, $header-gradient-end, $header-gradient-start);
+    }
+  }
+}
+
+// Sections du contenu
+.about-section {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.profile-image {
+  width: 200px;
+  height: 200px;
+  border-radius: $border-radius-circle;
+  object-fit: cover;
+  @include box-shadow(0 4px 15px rgba(0, 0, 0, 0.1));
+  border: 5px solid white;
+}
+
+.bio-section {
+  text-align: left;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  margin-top: 2rem;
+
+  h3 {
+    color: $contact-bg;
+    margin-bottom: 1rem;
+  }
+}
+
+.contact-info {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: rgba(139, 90, 84, 0.1);
+  border-radius: 15px;
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+
+.container {
+  position: relative;
+
+  p, h2, li {
+    @include transition(transform 0.3s ease);
+    padding: 5px 10px;
+    border-radius: 5px;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+
+  h2 {
+    color: $contact-bg;
+    margin-bottom: 1rem;
+  }
+}
+
+// Animations d'éléments spécifiques
+.profile-section {
+  h2, .lead {
+    background-image: linear-gradient(45deg, $header-gradient-start, $header-gradient-end, $header-gradient-start);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shine 9s linear infinite;
+    @include transition(color 0.3s ease);
+  }
+}
+
+// Styles de boutons
+.btn-primary {
+  background-color: $contact-bg;
+  border-color: $contact-bg;
+  color: #fff;
+
+  &:hover {
+    background-color: darken($contact-bg, 10%);
+    border-color: darken($contact-bg, 10%);
+    color: #fff;
+  }
+}
+
+// High-contrast mode
+@media (prefers-contrast: less) {
+  body {
+    background: #000;
+    color: #fff;
+  }
+
+  .mission-section, .contact-section, .bio-section {
+    background: #000;
+    color: #fff;
+  }
+
+  .social-link {
+    background: #fff;
+    color: #000;
+  }
+
+  .btn-primary {
+    background-color: #ff0;
+    border-color: #ff0;
+    color: #000;
+
+    &:hover {
+      background-color: #cc0;
+      border-color: #cc0;
+      color: #000;
+    }
+  }
+},

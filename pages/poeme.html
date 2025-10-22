@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="DAO Gnim Gregoire" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DropIn - Espace Poétique</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      rel="icon"
+      href="../assets/images/GDG_PRODUCTIONS.png"
+      type="image/png"
+    />
+    <style>
+      .poeme-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .poeme {
+        font-family: "Georgia", serif;
+        line-height: 1.8;
+        margin: 30px 0;
+        padding: 20px;
+        border-left: 4px solid #007bff;
+        background-color: rgba(240, 240, 240, 0.5);
+      }
+
+      .poeme-title {
+        font-style: italic;
+        color: #007bff;
+        margin-bottom: 15px;
+      }
+
+      .poeme-auteur {
+        text-align: right;
+        font-style: italic;
+        margin-top: 10px;
+      }
+
+      .btn-retour {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 100;
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+      }
+
+      .btn-retour:hover {
+        transform: translateX(-5px);
+        color: #0056b3;
+      }
+
+      .btn-retour span {
+        margin-right: 5px;
+        font-size: 20px;
+      }
+
+      .header {
+        text-align: center;
+        padding: 40px 0;
+        margin-bottom: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <a
+      href="../Page_Presentation.html"
+      class="btn-retour"
+      aria-label="Retour"
+      tabindex="0"
+    >
+      <span>←</span> Retour
+    </a>
+
+    <div class="header">
+      <img
+        src="../assets/images/GDG_PRODUCTIONS.png"
+        alt="GDG Productions Logo"
+        class="company-logo"
+        data-aos="zoom-in"
+      />
+      <h1 class="display-4" data-aos="fade-down">Espace Poétique</h1>
+      <p class="lead" data-aos="fade-up">
+        Les mots pour guérir, s'exprimer et s'élever
+      </p>
+    </div>
+
+    <div class="container poeme-container" data-aos="fade-up">
+      <div class="poeme" data-aos="fade-right">
+        <h3 class="poeme-title">Vers la lumière</h3>
+        <p>
+          Dans l'obscurité des salles de classe,<br />
+          Où mon esprit parfois se lasse,<br />
+          Je cherche une lumière, un espoir,<br />
+          Au-delà des manuels et des devoirs.<br /><br />
+
+          Les notes s'accumulent, les attentes pèsent,<br />
+          "Réussite", me dit-on, comme une thèse,<br />
+          Mais mon chemin semble différent,<br />
+          Unique, sinueux, pourtant vaillant.<br /><br />
+
+          Alors je m'accroche aux petites victoires,<br />
+          À ces instants où je comprends, où je crois,<br />
+          Que l'apprentissage est un voyage personnel,<br />
+          Pas une course contre le temps, contre les autres, cruelle.<br /><br />
+
+          Je ne suis pas un échec, je suis en devenir,<br />
+          Dans ce monde qui souvent veut tout définir,<br />
+          Je trace ma voie avec courage,<br />
+          Vers un avenir que je dessine, page après page.
+        </p>
+        <p class="poeme-auteur">- Un élève en recherche</p>
+      </div>
+
+      <div class="poeme" data-aos="fade-left">
+        <h3 class="poeme-title">L'école des possibles</h3>
+        <p>
+          Apprendre est un voyage,<br />
+          Pas une ligne d'arrivée,<br />
+          Chaque difficulté, un passage,<br />
+          Chaque erreur, une leçon apprivoisée.<br /><br />
+
+          Les murs de l'école ne sont pas des barrières,<br />
+          Mais des portes vers des mondes à explorer,<br />
+          Où chacun avance à sa manière,<br />
+          Unique, précieuse, à célébrer.<br /><br />
+
+          Parfois le chemin semble long,<br />
+          Les obstacles, immenses montagnes,<br />
+          Mais tu n'es jamais seul, non,<br />
+          Des mains tendues t'accompagnent.<br /><br />
+
+          Alors ne baisse pas les bras,<br />
+          Quand le doute en toi s'installe,<br />
+          Car ta lumière brillera,<br />
+          Au-delà des notes et des salles.
+        </p>
+        <p class="poeme-auteur">- DAO Gnim Gregoire</p>
+      </div>
+      <div class="text-center mt-5 mb-4">
+        <p>
+          Tu as aussi des mots à partager ? Un poème qui t'aide dans les moments
+          difficiles ?
+        </p>
+        <a
+          href="poemes.html"
+          class="btn btn-primary"
+          aria-label="Partager un poème"
+          tabindex="0"
+        >
+          <i class="fas fa-feather-alt"></i> Partager ton poème
+        </a>
+      </div>
+    </div>
+
+    <footer class="text-center mt-5 mb-3">
+      <p>&copy; 2024 DropIn - Les mots qui libèrent</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+    </script>
+  </body>
+</html>
